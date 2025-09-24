@@ -17,8 +17,8 @@ const Footer = () => {
               <span className="text-xl font-bold">ANDF</span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
-              L'Agence Nationale de Développement et de Financement accompagne les entreprises 
-              dans leur croissance et leur développement durable.
+              L'Agence Nationale de Développement et de Financement accompagne les citoyens 
+              dans la sécurisation de leurs droits fonciers et la protection de leur patrimoine.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -65,26 +65,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link 
-                  to="/demande" 
+                  to="/chatbots" 
                   className="text-gray-300 hover:text-white transition-colors duration-200"
                 >
-                  Demande
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/partenaire" 
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  Partenaire
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/contact" 
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  Contact
+                  Assistant IA
                 </Link>
               </li>
             </ul>
@@ -96,16 +80,17 @@ const Footer = () => {
             <div className="space-y-2 text-gray-300">
               <p>
                 <span className="font-medium">Adresse:</span><br />
-                123 Avenue de la République<br />
+                Ministère de l'Urbanisme<br />
+                Avenue Léopold Sédar Senghor<br />
                 Dakar, Sénégal
               </p>
               <p>
                 <span className="font-medium">Téléphone:</span><br />
-                +221 33 123 45 67
+                +221 33 889 15 00
               </p>
               <p>
                 <span className="font-medium">Email:</span><br />
-                contact@andf.sn
+                info@andf.sn
               </p>
             </div>
           </div>

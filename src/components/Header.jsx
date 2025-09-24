@@ -37,28 +37,20 @@ const Header = () => {
               Accueil
             </Link>
             <Link 
-              to="/demande" 
+              to="/chatbots" 
               className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/demande') ? 'text-blue-600 font-semibold' : ''
+                isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
-              Demande
+              Assistant IA
             </Link>
             <Link 
-              to="/partenaire" 
+              to="/dashboard" 
               className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/partenaire') ? 'text-blue-600 font-semibold' : ''
+                isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
-              Partenaire
-            </Link>
-            <Link 
-              to="/contact" 
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/contact') ? 'text-blue-600 font-semibold' : ''
-              }`}
-            >
-              Contact
+              Dashboard
             </Link>
           </div>
 
@@ -106,31 +98,22 @@ const Header = () => {
                 Accueil
               </Link>
               <Link 
-                to="/demande" 
+                to="/chatbots" 
                 onClick={() => setIsMenuOpen(false)}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/demande') ? 'text-blue-600 font-semibold' : ''
+                  isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
                 }`}
               >
-                Demande
+                Assistant IA
               </Link>
               <Link 
-                to="/partenaire" 
+                to="/dashboard" 
                 onClick={() => setIsMenuOpen(false)}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/partenaire') ? 'text-blue-600 font-semibold' : ''
+                  isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
                 }`}
               >
-                Partenaire
-              </Link>
-              <Link 
-                to="/contact" 
-                onClick={() => setIsMenuOpen(false)}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/contact') ? 'text-blue-600 font-semibold' : ''
-                }`}
-              >
-                Contact
+                Dashboard
               </Link>
             </div>
           </div>
