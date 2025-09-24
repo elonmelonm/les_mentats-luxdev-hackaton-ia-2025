@@ -1,19 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section 
-      className="relative h-screen text-white bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/carte_benin.jpg')`
-      }}
-    >
+    <section className="relative h-screen text-white bg-cover bg-center bg-no-repeat benin-hero-bg">
       <div className="relative container mx-auto px-4 py-20 lg:py-32">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Cadastre en ligne
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">Cadastre en ligne</h1>
           <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
             Réaliser toutes vos demandes
             <span className="block text-yellow-400">directement en ligne.</span>

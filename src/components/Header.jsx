@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/logo-andf.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  const isActive = (path) => location.pathname === path;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,38 +18,34 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <img 
-              src="/src/assets/logo-andf.png" 
-              alt="ANDF Logo" 
-              className="h-10 w-auto"
-            />
+            <img src={logo} alt="ANDF Logo" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
                 isActive('/') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
               Accueil
             </Link>
-            <Link 
-              to="/chatbots" 
+            <Link
+              to="/cadastre"
               className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
+                isActive('/cadastre') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
-              Assistant IA
+              Cadastre
             </Link>
-            <Link 
-              to="/dashboard" 
+            <Link
+              to="/topographie"
               className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
+                isActive('/topographie') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
-              Dashboard
+              Topographie
             </Link>
           </div>
 
@@ -59,26 +54,11 @@ const Header = () => {
             onClick={toggleMenu}
             className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
@@ -88,8 +68,8 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4 pt-4">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 onClick={() => setIsMenuOpen(false)}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
                   isActive('/') ? 'text-blue-600 font-semibold' : ''
@@ -97,23 +77,23 @@ const Header = () => {
               >
                 Accueil
               </Link>
-              <Link 
-                to="/chatbots" 
+              <Link
+                to="/cadastre"
                 onClick={() => setIsMenuOpen(false)}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
+                  isActive('/cadastre') ? 'text-blue-600 font-semibold' : ''
                 }`}
               >
-                Assistant IA
+                Cadastre
               </Link>
-              <Link 
-                to="/dashboard" 
+              <Link
+                to="/topographie"
                 onClick={() => setIsMenuOpen(false)}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
+                  isActive('/topographie') ? 'text-blue-600 font-semibold' : ''
                 }`}
               >
-                Dashboard
+                Topographie
               </Link>
             </div>
           </div>
