@@ -4,6 +4,8 @@ import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import Chatbots from './pages/Chatbots';
 import Dashboard from './pages/Dashboard';
+import Cadastre from './pages/Cadastre';
+import Topographie from './pages/Topographie';
 // import './App.css';
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/chatbots" element={<Chatbots />} />
+              <Route path="/cadastre" element={<Cadastre />} />
+              <Route path="/topographie" element={<Topographie />} />
             </Routes>
           </MainLayout>
         } />

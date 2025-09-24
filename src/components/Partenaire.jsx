@@ -86,7 +86,7 @@ const Partenaire = () => {
                   <div className="bg-gray-50 rounded-lg p-8 h-48 flex flex-col items-center justify-center hover:shadow-lg transition-shadow duration-300">
                     <div className="mb-4">
                       <img 
-                        src={partenaire.logo} 
+                        src={partenaire.logo}   
                         alt={partenaire.name}
                         className="h-16 w-auto object-contain mx-auto"
                       />

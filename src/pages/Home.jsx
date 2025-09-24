@@ -5,6 +5,7 @@ import Hero from '../components/Hero';
 import DemandeSimple from '../components/DemandeSimple';
 import Partenaire from '../components/Partenaire';
 import { Services } from '../components/Services';
+import Contact from '../components/Contact';
 
 const Home = () => {
   return (
@@ -12,7 +13,8 @@ const Home = () => {
       <Hero />
       <Services />
       {/* <DemandeSimple /> */}
-      <Partenaire />
+      {/* <Partenaire /> */}
+      <Contact />
     </div>
   );
 };

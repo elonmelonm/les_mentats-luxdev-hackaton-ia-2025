@@ -19,7 +19,7 @@ export function Services() {
       </div>
       <div className="grid grid-cols-3 gap-8">
         {/* Service 1 - Topographie */}
-        <div className="group relative flex flex-col items-end justify-end min-w-72 min-h-72 gap-4 border hover:border-[#367C55] hover:border-[8px] p-4 transition-all duration-300 cursor-pointer">
+        <div className="group relative flex flex-col items-end justify-end min-w-72 min-h-72 gap-4 border hover:border-[#367C55] hover:border-[8px] p-4 transition-all duration-300">
             <span className="text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">01</span>
             <span className="text-sm text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Topographie</span>
             
@@ -32,14 +32,14 @@ export function Services() {
                 <ul className="text-sm text-gray-500 space-y-2 mb-6">
                     Levés topographiques précis pour vos projets de construction et d'aménagement.
                 </ul>
-                <button className="bg-[#367C55] text-white px-6 py-2 hover:bg-[#2d5f44] transition-colors duration-200">
-                    En savoir plus
+                <button className="bg-[#367C55] text-white px-6 py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase">
+                    Vérifier
                 </button>
             </div>
         </div>
 
         {/* Service 2 - Cadastre */}
-        <div className="group relative flex flex-col items-end justify-end min-w-72 min-h-72 gap-4 border hover:border-[#367C55] hover:border-[8px] p-4 transition-all duration-300 cursor-pointer">
+        <div className="group relative flex flex-col items-end justify-end min-w-72 min-h-72 gap-4 border hover:border-[#367C55] hover:border-[8px] p-4 transition-all duration-300">
             <span className="text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">02</span>
             <span className="text-sm text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Cadastre</span>
             
@@ -55,14 +55,14 @@ export function Services() {
                 <ul className="text-sm text-gray-500 space-y-2 mb-6">
                     Sécurisation foncière et délivrance de titres de propriété.
                 </ul>
-                <button className="bg-[#367C55] text-white px-6 py-2 hover:bg-[#2d5f44] transition-colors duration-200">
+                <button className="bg-[#367C55] text-white px-6 py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase">
                     En savoir plus
                 </button>
             </div>
         </div>
 
         {/* Service 3 - Chatbot */}
-        <div className="group relative flex flex-col items-end justify-end min-w-72 min-h-72 gap-4 border hover:border-[#367C55] hover:border-[8px] p-4 transition-all duration-300 cursor-pointer">
+        <div className="group relative flex flex-col items-end justify-end min-w-72 min-h-72 gap-4 border hover:border-[#367C55] hover:border-[8px] p-4 transition-all duration-300">
             <span className="text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">03</span>
             <span className="text-sm text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Chatbot</span>
             
@@ -78,8 +78,8 @@ export function Services() {
                 <ul className="text-sm text-gray-500 space-y-2 mb-6">
                     Assistant virtuel intelligent pour répondre à vos questions 24h/24.
                 </ul>
-                <button className="bg-[#367C55] text-white px-6 py-2 hover:bg-[#2d5f44] transition-colors duration-200">
-                    En savoir plus
+                <button className="bg-[#367C55] text-white px-6 py-2 hover:bg-[#2d5f44] transition-colors duration-200  cursor-pointer uppercase">
+                    Des questions ?
                 </button>
             </div>
         </div>

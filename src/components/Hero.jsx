@@ -33,7 +33,7 @@ const Hero = () => {
                 const demandeSection = document.getElementById('demande-section');
                 demandeSection?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="bg-[#00573A] h-12 hover:bg-white text-white hover:text-green-900 font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="bg-[#00573A] h-12 hover:bg-white text-white hover:text-green-900 font-semibold py-3 px-8 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Faire une demande
             </button>

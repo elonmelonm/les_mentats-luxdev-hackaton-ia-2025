@@ -1,7 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
   return (
     <footer className="bg-[#273344] px-32 text-white">
       <div className="container flex flex-col mx-auto px-4 py-12 gap-9">
@@ -59,23 +65,29 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/" 
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  className={`"text-gray-300 hover:text-white transition-colors duration-200 ${
+                    isActive('/') ? 'text-yellow-600 font-semibold' : ''
+                }`}
                 >
                   Accueil
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/chatbots" 
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  to="/cadastre" 
+                  className={`"text-gray-300 hover:text-white transition-colors duration-200 ${
+                  isActive('/cadastre') ? 'text-yellow-600 font-semibold' : ''
+              }`}
                 >
                   Cadastre
                 </Link>
               </li>
               <li>
                 <Link 
-                  to="/chatbots" 
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  to="/topographie" 
+                  className={`"text-gray-300 hover:text-white transition-colors duration-200 ${
+                    isActive('/topographie') ? 'text-yellow-600 font-semibold' : ''
+                }`}
                 >
                   Topographie
                 </Link>

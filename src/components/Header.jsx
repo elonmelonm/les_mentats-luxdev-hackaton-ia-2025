@@ -32,23 +32,23 @@ const Header = () => {
             <Link 
               to="/" 
               className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
-                isActive('/') ? 'text-blu-600 font-semibold' : ''
+                isActive('/') ? 'text-yellow-600 font-semibold' : ''
               }`}
             >
               Accueil
             </Link>
             <Link 
-              to="/chatbots" 
+              to="/cadastre" 
               className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
-                isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
+                isActive('/cadastre') ? 'text-yellow-600 font-semibold' : ''
               }`}
             >
               Cadastre
             </Link>
             <Link 
-              to="/chatbots" 
+              to="/topographie" 
               className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
-                isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
+                isActive('/topographie') ? 'text-yellow-600 font-semibold' : ''
               }`}
             >
               Topographie
@@ -115,7 +115,7 @@ const Header = () => {
               >
                 Assistant IA
               </Link>
-              <Link 
+              {/* <Link 
                 to="/dashboard" 
                 onClick={() => setIsMenuOpen(false)}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
@@ -123,7 +123,7 @@ const Header = () => {
                 }`}
               >
                 Dashboard
-              </Link>
+              </Link> */}
             </div>
           </div>
         )}
