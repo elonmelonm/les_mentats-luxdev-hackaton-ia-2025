@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image1 from '../assets/favicon-andf.png';
 
 const Partenaire = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -8,37 +9,37 @@ const Partenaire = () => {
     {
       id: 1,
       name: "Ministère de l'Urbanisme",
-      logo: "/src/assets/logo-andf.png",
+      logo: {Image1},
       description: "Ministère de l'Urbanisme"
     },
     {
       id: 2,
       name: "Direction des Domaines",
-      logo: "/src/assets/logo-andf.png",
+      logo: {Image1},
       description: "Direction des Domaines"
     },
     {
       id: 3,
       name: "Ordre des Géomètres",
-      logo: "/src/assets/logo-andf.png",
+      logo: {Image1},
       description: "Ordre des Géomètres"
     },
     {
       id: 4,
       name: "Ordre des Notaires",
-      logo: "/src/assets/logo-andf.png",
+      logo: {Image1},
       description: "Ordre des Notaires"
     },
     {
       id: 5,
       name: "Chambre des Avocats",
-      logo: "/src/assets/logo-andf.png",
+      logo: {Image1},
       description: "Chambre des Avocats"
     },
     {
       id: 6,
       name: "Collectivités Locales",
-      logo: "/src/assets/logo-andf.png",
+      logo: {Image1},
       description: "Collectivités Locales"
     }
   ];

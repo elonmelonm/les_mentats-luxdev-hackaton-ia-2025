@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Image from '../assets/carte_benin.jpg';
 
 const Hero = () => {
   return (
@@ -18,6 +19,8 @@ const Hero = () => {
         className="absolute inset-0 opacity-80"
         style={{ backgroundColor: '#0f172a' }}
       ></div>
+
+      <img src={Image} alt="Carte Benin" />
       
       <div className="relative container mx-auto px-4 py-20 lg:py-40">
         <div className="max-w-4xl mx-auto text-center">
