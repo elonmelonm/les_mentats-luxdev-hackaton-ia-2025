@@ -3,19 +3,20 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-[#273344] px-32 text-white">
+      <div className="container flex flex-col mx-auto px-4 py-12 gap-9">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo et description */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
+            <h3 className="text-lg font-semibold mb-4 uppercase">L'ANDF</h3>
+            {/* <div className="flex items-center space-x-2 mb-4">
               <img 
                 src="/src/assets/logo-andf.png" 
                 alt="ANDF Logo" 
                 className="h-10 w-auto"
               />
               <span className="text-xl font-bold">ANDF</span>
-            </div>
+            </div> */}
             <p className="text-gray-300 mb-4 max-w-md">
               L'Agence Nationale de Développement et de Financement accompagne les citoyens 
               dans la sécurisation de leurs droits fonciers et la protection de leur patrimoine.
@@ -53,7 +54,7 @@ const Footer = () => {
 
           {/* Liens rapides */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Liens rapides</h3>
+            <h3 className="text-lg font-semibold mb-4 uppercase">Liens utiles</h3>
             <ul className="space-y-2">
               <li>
                 <Link 
@@ -68,7 +69,15 @@ const Footer = () => {
                   to="/chatbots" 
                   className="text-gray-300 hover:text-white transition-colors duration-200"
                 >
-                  Assistant IA
+                  Cadastre
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/chatbots" 
+                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                >
+                  Topographie
                 </Link>
               </li>
             </ul>
@@ -76,29 +85,35 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4 uppercase">Contact</h3>
             <div className="space-y-2 text-gray-300">
               <p>
                 <span className="font-medium">Adresse:</span><br />
-                Ministère de l'Urbanisme<br />
-                Avenue Léopold Sédar Senghor<br />
-                Dakar, Sénégal
+                Cotonou, Immeuble Golden House, Face Église Sainte Rita
               </p>
               <p>
                 <span className="font-medium">Téléphone:</span><br />
-                +221 33 889 15 00
+                +229 01 97 43 42 93
               </p>
               <p>
                 <span className="font-medium">Email:</span><br />
-                info@andf.sn
+                andf@finances.bj
               </p>
             </div>
           </div>
         </div>
 
+        {/* <div className="flex flex-row"> */}
+          <div className="grid grid-cols-3 w-full">
+            <div className="h-2 bg-[#00965E] "></div>
+            <div className="h-2 bg-[#FFCC00]"></div>
+            <div className="h-2 bg-[#ED1C24]"></div>
+          </div>
+        {/* </div> */}
+
         {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 ANDF. Tous droits réservés.</p>
+        <div className="border-t border-gray-500 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; Agence Nationale du Domaine et du Foncier -  2025 ANDF. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

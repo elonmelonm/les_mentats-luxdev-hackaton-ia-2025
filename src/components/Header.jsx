@@ -14,15 +14,15 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+    <header className="sticky top-0 z-50 px-32 h-24 bg-white shadow-md">
+      <nav className="container mx-auto py- flex flex-row text-[#367C55] items-center justify-center h-full w-full">
+        <div className="flex items-center w-full justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
               src="/src/assets/logo-andf.png" 
               alt="ANDF Logo" 
-              className="h-10 w-auto"
+              className="h-18 w-auto"
             />
           </Link>
 
@@ -30,28 +30,36 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/') ? 'text-blue-600 font-semibold' : ''
+              className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
+                isActive('/') ? 'text-blu-600 font-semibold' : ''
               }`}
             >
               Accueil
             </Link>
             <Link 
               to="/chatbots" 
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
+              className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
                 isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
-              Assistant IA
+              Cadastre
             </Link>
             <Link 
+              to="/chatbots" 
+              className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
+                isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
+              }`}
+            >
+              Topographie
+            </Link>
+            {/* <Link 
               to="/dashboard" 
               className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
                 isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
               }`}
             >
               Dashboard
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile menu button */}
