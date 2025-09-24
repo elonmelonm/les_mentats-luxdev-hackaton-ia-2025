@@ -9,7 +9,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#273344] px-32 text-white">
+    <footer className="bg-[#273344] lg:px-8 xl:px-32 text-white">
       <div className="container flex flex-col mx-auto px-4 py-12 gap-9">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo et description */}
