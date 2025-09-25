@@ -445,17 +445,17 @@ export default function Topographie() {
   return (
     <div className="min-h-screen bg-[#EDEDED] py-8 px-4 sm:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        {/* En-tête */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#367C55] mb-4">
+        {/* En-tête avec fond dégradé */}
+        <div className="text-center mb-12 p-12 rounded-xl" style={{ background: 'linear-gradient(135deg, #1B4332, #95D5B2)' }}>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Services de Topographie
           </h1>
           <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-12 h-1 bg-[#367C55] rounded-full"></div>
-            <div className="w-1 h-1 bg-[#367C55] rounded-full"></div>
-            <div className="w-12 h-1 bg-[#367C55] rounded-full"></div>
+            <div className="w-12 h-1 bg-white/30 rounded-full"></div>
+            <div className="w-1 h-1 bg-white/30 rounded-full"></div>
+            <div className="w-12 h-1 bg-white/30 rounded-full"></div>
           </div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-white/90 max-w-3xl mx-auto">
             Téléversez vos documents topographiques pour une analyse précise et professionnelle
           </p>
         </div>
@@ -700,7 +700,7 @@ export default function Topographie() {
                     onClick={openMapPage}
                     className={`${extractedData.empietement ? 'bg-red-600' : 'bg-[#367C55]'} text-white py-3 px-8 rounded-lg font-semibold hover:bg-[#2d5f44] transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1`}
                   >
-                    🗺️ Ouvrir la carte interactive
+                    Voir sur la carte interactive
                   </button>
                 </div>
               </div>
