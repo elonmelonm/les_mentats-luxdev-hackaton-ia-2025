@@ -41,6 +41,7 @@ class AnalyseCompleteResponse(BaseModel):
     air_proteges: CoucheResult
     dpl: CoucheResult
     dpm: CoucheResult
+    enregistrement_individuel: CoucheResult
     litige: CoucheResult
     parcelle: CoucheResult
     restriction: CoucheResult
