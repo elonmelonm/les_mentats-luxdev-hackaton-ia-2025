@@ -127,13 +127,20 @@ export default function Topographie() {
   // Gestion de la caméra
   const startCamera = async () => {
     try {
+      console.log('🔍 Début de l\'accès à la caméra...');
+      
       // Vérifier si getUserMedia est supporté
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         setError('Votre navigateur ne supporte pas l\'accès à la caméra');
         return;
       }
 
-      // Configuration optimisée pour mobile
+      // Vérifier les contraintes supportées
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+      console.log('📹 Appareils vidéo disponibles:', videoDevices);
+
+      // Configuration progressive avec fallback
       const constraints = {
         video: {
           facingMode: { ideal: 'environment' }, // Caméra arrière
@@ -143,20 +150,50 @@ export default function Topographie() {
         audio: false
       };
 
+      console.log('🎥 Tentative d\'accès avec contraintes:', constraints);
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      console.log('✅ Stream obtenu:', stream);
+      console.log('📊 Tracks vidéo:', stream.getVideoTracks());
+
       setCameraStream(stream);
       setShowCamera(true);
       setError(''); // Clear any previous errors
       
       if (cameraVideoRef.current) {
+        console.log('🎬 Configuration de l\'élément vidéo...');
         cameraVideoRef.current.srcObject = stream;
-        // Attendre que la vidéo soit prête
+        
+        // Gestion des événements vidéo
         cameraVideoRef.current.onloadedmetadata = () => {
-          cameraVideoRef.current.play();
+          console.log('📺 Métadonnées vidéo chargées');
+          cameraVideoRef.current.play().then(() => {
+            console.log('▶️ Vidéo en cours de lecture');
+          }).catch(err => {
+            console.error('❌ Erreur de lecture vidéo:', err);
+          });
         };
+
+        cameraVideoRef.current.oncanplay = () => {
+          console.log('🎬 Vidéo prête à être lue');
+        };
+
+        cameraVideoRef.current.onerror = (err) => {
+          console.error('❌ Erreur vidéo:', err);
+          setError('Erreur lors de l\'affichage de la vidéo');
+        };
+
+        // Forcer la lecture après un délai
+        setTimeout(() => {
+          if (cameraVideoRef.current && cameraVideoRef.current.paused) {
+            console.log('🔄 Tentative de lecture forcée...');
+            cameraVideoRef.current.play().catch(err => {
+              console.error('❌ Échec de la lecture forcée:', err);
+            });
+          }
+        }, 1000);
       }
     } catch (error) {
-      console.error('Erreur caméra:', error);
+      console.error('❌ Erreur caméra:', error);
       let errorMessage = 'Impossible d\'accéder à la caméra';
       
       if (error.name === 'NotAllowedError') {
@@ -167,6 +204,24 @@ export default function Topographie() {
         errorMessage = 'Votre navigateur ne supporte pas l\'accès à la caméra.';
       } else if (error.name === 'NotReadableError') {
         errorMessage = 'La caméra est déjà utilisée par une autre application.';
+      } else if (error.name === 'OverconstrainedError') {
+        errorMessage = 'Configuration de caméra non supportée. Essayez avec une configuration plus simple.';
+        // Essayer avec une configuration plus simple
+        try {
+          console.log('🔄 Tentative avec configuration simplifiée...');
+          const simpleStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          setCameraStream(simpleStream);
+          setShowCamera(true);
+          setError('');
+          
+          if (cameraVideoRef.current) {
+            cameraVideoRef.current.srcObject = simpleStream;
+            cameraVideoRef.current.play();
+          }
+          return;
+        } catch (simpleError) {
+          console.error('❌ Échec avec configuration simple:', simpleError);
+        }
       }
       
       setError(errorMessage);
@@ -175,10 +230,31 @@ export default function Topographie() {
 
   const stopCamera = () => {
     if (cameraStream) {
-      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream.getTracks().forEach(track => {
+        console.log('🛑 Arrêt du track:', track.label, track.readyState);
+        track.stop();
+      });
       setCameraStream(null);
     }
     setShowCamera(false);
+  };
+
+  // Fonction de diagnostic
+  const diagnoseCamera = () => {
+    console.log('🔍 Diagnostic de la caméra:');
+    console.log('- getUserMedia supporté:', !!navigator.mediaDevices?.getUserMedia);
+    console.log('- HTTPS:', location.protocol === 'https:');
+    console.log('- Localhost:', location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+    console.log('- User Agent:', navigator.userAgent);
+    
+    if (cameraVideoRef.current) {
+      console.log('- Élément vidéo:', cameraVideoRef.current);
+      console.log('- srcObject:', cameraVideoRef.current.srcObject);
+      console.log('- readyState:', cameraVideoRef.current.readyState);
+      console.log('- paused:', cameraVideoRef.current.paused);
+      console.log('- videoWidth:', cameraVideoRef.current.videoWidth);
+      console.log('- videoHeight:', cameraVideoRef.current.videoHeight);
+    }
   };
 
   const capturePhoto = () => {
@@ -250,7 +326,7 @@ export default function Topographie() {
                     </svg>
                   </div>
                   
-                  <div>
+    <div>
                     <p className="text-lg font-semibold text-gray-700">
                       Glissez-déposez votre fichier ici
                     </p>
@@ -410,28 +486,40 @@ export default function Topographie() {
                 </div>
               </div>
               
-              <div className="p-4">
-                <video
-                  ref={cameraVideoRef}
-                  autoPlay
-                  playsInline
-                  className="w-full h-64 bg-gray-900 rounded-lg"
-                />
+               <div className="p-4">
+                 <video
+                   ref={cameraVideoRef}
+                   autoPlay
+                   playsInline
+                   muted
+                   controls={false}
+                   className="w-full h-64 bg-gray-900 rounded-lg"
+                   style={{ objectFit: 'cover' }}
+                 />
                 
-                <div className="flex gap-3 mt-4">
-                  <button
-                    onClick={capturePhoto}
-                    className="flex-1 bg-[#367C55] text-white py-2 px-4 rounded-lg hover:bg-[#2d5f44] transition-colors duration-200"
-                  >
-                    Capturer
-                  </button>
-                  <button
-                    onClick={stopCamera}
-                    className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors duration-200"
-                  >
-                    Annuler
-                  </button>
-                </div>
+                 <div className="flex gap-3 mt-4">
+                   <button
+                     onClick={capturePhoto}
+                     className="flex-1 bg-[#367C55] text-white py-2 px-4 rounded-lg hover:bg-[#2d5f44] transition-colors duration-200"
+                   >
+                     Capturer
+                   </button>
+                   <button
+                     onClick={stopCamera}
+                     className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors duration-200"
+                   >
+                     Annuler
+                   </button>
+                 </div>
+                 
+                 <div className="mt-4">
+                   <button
+                     onClick={diagnoseCamera}
+                     className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm"
+                   >
+                     🔍 Diagnostic (voir console)
+                   </button>
+                 </div>
               </div>
             </div>
           </div>
