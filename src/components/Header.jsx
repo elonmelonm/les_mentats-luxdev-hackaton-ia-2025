@@ -29,7 +29,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-2 h-full">
+        <div className="hidden md:flex items-center h-full">
           <Link 
             to="/" 
             className={`px-4 h-full flex items-center font-semibold tracking-wide transition-all duration-300 ${
