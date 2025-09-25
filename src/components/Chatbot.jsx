@@ -110,7 +110,7 @@ export default function Chatbot({ isOpen, onClose }) {
         <div className="bg-gradient-to-r from-[#367C55] to-[#2d5f44] text-white p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-white bg-opacity-20 p-2 rounded-full">
-              <SparklesIcon className="w-6 h-6" />
+              <SparklesIcon className="text-[#367C55] w-6 h-6" />
             </div>
             <div>
               <h3 className="font-semibold text-lg">Assistant IA</h3>
@@ -119,7 +119,7 @@ export default function Chatbot({ isOpen, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white hover:bg-opacity-20 rounded-full transition-colors duration-200"
+            className="p-2 hover:bg-white hover:text-[#367C55] hover:bg-opacity-20 rounded-full transition-colors duration-200 cursor-pointer"
           >
             <XMarkIcon className="w-5 h-5" />
           </button>
