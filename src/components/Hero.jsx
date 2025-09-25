@@ -91,21 +91,21 @@ const Hero = () => {
                 <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
                   {slide.subtitle}
                 </p>
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => {
-                      const demandeSection = document.getElementById('services-section');
-                      demandeSection?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="bg-[#00573A] h-12 hover:bg-white text-white hover:text-green-900 font-semibold py-3 px-8 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
-                  >
-                    {slide.buttonText}
-                  </button>
-                </div>
+                {/* Bouton supprimé des slides individuels : un bouton unique permanent est rendu plus bas */}
               </div>
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Bouton unique permanent centré (visible pendant toute l'animation) */}
+      <div className="absolute inset-x-0 bottom-24 flex justify-center z-20">
+        <Link
+          to="/topographie"
+          className="bg-[#00573A] h-12 hover:bg-white text-white hover:text-green-900 font-semibold py-3 px-8 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
+        >
+          Faire une demande
+        </Link>
       </div>
 
       {/* Boutons de navigation */}
