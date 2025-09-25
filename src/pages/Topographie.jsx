@@ -137,7 +137,7 @@ export default function Topographie() {
       
       setUploadProgress(100);
       setIsUploading(false);
-      console.log('✅ SIMULATION: Upload terminé');
+      console.log('✅ : Upload terminé');
       
       // SIMULATION - Étape 2: Extraction des données
       setIsExtracting(true);
@@ -153,7 +153,7 @@ export default function Topographie() {
       setExtractedData(simulatedData);
       setIsExtracting(false);
       setSuccess('Extraction terminée ! Données disponibles pour l\'affichage sur la carte.');
-      console.log('✅ SIMULATION: Extraction terminée', simulatedData);
+      console.log('✅: Extraction terminée', simulatedData);
 
     } catch (error) {
       console.error('Erreur:', error);
