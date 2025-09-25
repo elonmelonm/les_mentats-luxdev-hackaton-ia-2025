@@ -99,7 +99,7 @@ const Hero = () => {
       </div>
 
       {/* Bouton unique permanent centré (visible pendant toute l'animation) */}
-      <div className="absolute inset-x-0 bottom-24 flex justify-center z-20">
+      <div className="absolute inset-x-0 bottom-30 md:bottom-44 flex justify-center z-20">
         <Link
           to="/topographie"
           className="bg-[#00573A] h-12 hover:bg-white text-white hover:text-green-900 font-semibold py-3 px-8 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
@@ -111,7 +111,7 @@ const Hero = () => {
       {/* Boutons de navigation */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-all duration-200 z-10 cursor-pointer"
+        className="absolute left-4 hidden md:block top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-all duration-200 z-10 cursor-pointer"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -120,7 +120,7 @@ const Hero = () => {
       
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-all duration-200 z-10 cursor-pointer"
+        className="absolute right-4 hidden md:block top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-all duration-200 z-10 cursor-pointer"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
