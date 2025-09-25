@@ -161,11 +161,29 @@ export default function Topographie() {
       
       if (cameraVideoRef.current) {
         console.log('🎬 Configuration de l\'élément vidéo...');
+        
+        // Vérifier que le stream est valide
+        if (!stream || stream.getVideoTracks().length === 0) {
+          console.error('❌ Stream invalide ou pas de tracks vidéo');
+          setError('Aucun flux vidéo disponible');
+          return;
+        }
+
+        // Assigner le stream à l'élément vidéo
         cameraVideoRef.current.srcObject = stream;
+        console.log('✅ Stream assigné à l\'élément vidéo');
+        
+        // Vérifier que l'assignation a fonctionné
+        setTimeout(() => {
+          console.log('🔍 Vérification après assignation:');
+          console.log('- srcObject:', cameraVideoRef.current.srcObject);
+          console.log('- readyState:', cameraVideoRef.current.readyState);
+        }, 100);
         
         // Gestion des événements vidéo
         cameraVideoRef.current.onloadedmetadata = () => {
           console.log('📺 Métadonnées vidéo chargées');
+          console.log('- Dimensions:', cameraVideoRef.current.videoWidth, 'x', cameraVideoRef.current.videoHeight);
           cameraVideoRef.current.play().then(() => {
             console.log('▶️ Vidéo en cours de lecture');
           }).catch(err => {
@@ -191,6 +209,23 @@ export default function Topographie() {
             });
           }
         }, 1000);
+
+        // Vérification supplémentaire après 2 secondes
+        setTimeout(() => {
+          if (cameraVideoRef.current) {
+            console.log('🔍 Vérification finale:');
+            console.log('- srcObject:', cameraVideoRef.current.srcObject);
+            console.log('- readyState:', cameraVideoRef.current.readyState);
+            console.log('- paused:', cameraVideoRef.current.paused);
+            console.log('- videoWidth:', cameraVideoRef.current.videoWidth);
+            console.log('- videoHeight:', cameraVideoRef.current.videoHeight);
+            
+            if (!cameraVideoRef.current.srcObject) {
+              console.error('❌ srcObject toujours null après 2 secondes');
+              setError('Impossible d\'assigner le flux vidéo à l\'élément');
+            }
+          }
+        }, 2000);
       }
     } catch (error) {
       console.error('❌ Erreur caméra:', error);
@@ -246,6 +281,8 @@ export default function Topographie() {
     console.log('- HTTPS:', location.protocol === 'https:');
     console.log('- Localhost:', location.hostname === 'localhost' || location.hostname === '127.0.0.1');
     console.log('- User Agent:', navigator.userAgent);
+    console.log('- Stream actuel:', cameraStream);
+    console.log('- Tracks vidéo:', cameraStream ? cameraStream.getVideoTracks() : 'Aucun stream');
     
     if (cameraVideoRef.current) {
       console.log('- Élément vidéo:', cameraVideoRef.current);
@@ -254,6 +291,23 @@ export default function Topographie() {
       console.log('- paused:', cameraVideoRef.current.paused);
       console.log('- videoWidth:', cameraVideoRef.current.videoWidth);
       console.log('- videoHeight:', cameraVideoRef.current.videoHeight);
+      console.log('- autoplay:', cameraVideoRef.current.autoplay);
+      console.log('- muted:', cameraVideoRef.current.muted);
+      console.log('- playsInline:', cameraVideoRef.current.playsInline);
+    }
+
+    // Test de création d'un nouveau stream
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      console.log('🧪 Test de création d\'un nouveau stream...');
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(testStream => {
+          console.log('✅ Test stream créé:', testStream);
+          console.log('- Tracks:', testStream.getVideoTracks());
+          testStream.getTracks().forEach(track => track.stop());
+        })
+        .catch(err => {
+          console.error('❌ Échec du test stream:', err);
+        });
     }
   };
 
@@ -512,12 +566,31 @@ export default function Topographie() {
                    </button>
                  </div>
                  
-                 <div className="mt-4">
+                 <div className="mt-4 space-y-2">
                    <button
                      onClick={diagnoseCamera}
                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm"
                    >
                      🔍 Diagnostic (voir console)
+                   </button>
+                   
+                   <button
+                     onClick={() => {
+                       if (cameraStream && cameraVideoRef.current) {
+                         console.log('🔧 Tentative de réparation du stream...');
+                         cameraVideoRef.current.srcObject = cameraStream;
+                         setTimeout(() => {
+                           if (cameraVideoRef.current) {
+                             cameraVideoRef.current.play().catch(err => {
+                               console.error('❌ Erreur de réparation:', err);
+                             });
+                           }
+                         }, 100);
+                       }
+                     }}
+                     className="w-full bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors duration-200 text-sm"
+                   >
+                     🔧 Réparer le stream
                    </button>
                  </div>
               </div>
