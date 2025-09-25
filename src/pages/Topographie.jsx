@@ -50,7 +50,7 @@ export default function Topographie() {
   // Validation des fichiers
   const validateFile = (file) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    const maxSize = 100 * 1024 * 1024; // 100MB
 
     if (!allowedTypes.includes(file.type)) {
       setError('Type de fichier non autorisé. Formats acceptés : PDF, JPEG, JPG, PNG');
@@ -58,7 +58,7 @@ export default function Topographie() {
     }
 
     if (file.size > maxSize) {
-      setError('Le fichier est trop volumineux. Taille maximale : 2MB');
+      setError('Le fichier est trop volumineux. Taille maximale : 100MB');
       return false;
     }
 
@@ -460,7 +460,7 @@ export default function Topographie() {
                     
                     <div className="text-xs text-gray-400">
                       <p>Formats acceptés : PDF, JPEG, JPG, PNG</p>
-                      <p>Taille maximale : 2MB</p>
+                      <p>Taille maximale : 100MB</p>
                     </div>
                     
                     {/* Bouton caméra pour mobile/tablette */}
@@ -567,55 +567,6 @@ export default function Topographie() {
             </div>
           </div>
         </div>
-
-        {/* Modal Caméra */}
-        {/* {showCamera && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg max-w-md w-full">
-              <div className="p-4 border-b">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Prendre une photo</h3>
-                  <button
-                    onClick={stopCamera}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              
-               <div className="p-4">
-                 <video
-                   ref={cameraVideoRef}
-                   autoPlay
-                   playsInline
-                   muted
-                   controls={false}
-                   className="w-full h-64 bg-gray-900 rounded-lg"
-                   style={{ objectFit: 'cover' }}
-                 />
-                
-                 <div className="flex gap-3 mt-4">
-                   <button
-                     onClick={capturePhoto}
-                     className="flex-1 bg-[#367C55] text-white py-2 px-4 rounded-lg hover:bg-[#2d5f44] transition-colors duration-200"
-                   >
-                     Capturer
-                   </button>
-                   <button
-                     onClick={stopCamera}
-                     className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors duration-200"
-                   >
-                     Annuler
-                   </button>
-                 </div>
-                 
-              </div>
-            </div>
-          </div>
-        )} */}
 
         {/* Canvas caché pour la capture */}
         <canvas ref={cameraCanvasRef} className="hidden" />
