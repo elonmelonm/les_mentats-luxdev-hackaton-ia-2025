@@ -1,8 +1,29 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 
 export function Services() {
+  const navigate = useNavigate();
+
+  const openChatbot = () => {
+    // Déclencher un événement personnalisé pour ouvrir le chatbot
+    window.dispatchEvent(new CustomEvent('openChatbot'));
+  };
+
+  // Gestionnaires de clic pour chaque service
+  const handleTopographieClick = () => {
+    navigate('/topographie');
+  };
+
+  const handleCadastreClick = () => {
+    navigate('/cadastre');
+  };
+
+  const handleChatbotClick = () => {
+    navigate('/chatbo');
+  };
+
   return (
     <div id="services-section" className="px-4 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-12 md:py-16 min-h-screen flex flex-col bg-[#EDEDED] items-center justify-center gap-8 sm:gap-10 md:gap-12">
       <div className="flex flex-col items-center justify-center gap-3 sm:gap-4">
@@ -19,8 +40,8 @@ export function Services() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 w-full max-w-7xl">
         {/* Service 1 - Topographie */}
-        <div className="group relative flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 border hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer">
-            <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">01</span>
+        <div className="group relative shadow-lg flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 borde hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer">
+            <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-[#5da57d] group-hover:text-[#367C55] transition-colors duration-300">01</span>
             <span className="text-xs sm:text-sm text-xl sm:text-2xl md:text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Topographie</span>
             
             {/* Informations au survol */}
@@ -32,15 +53,18 @@ export function Services() {
                 <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 md:mb-6 leading-relaxed">
                     Levés topographiques précis pour vos projets de construction et d'aménagement.
                 </p>
-                <button className="bg-[#367C55] text-white px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase text-xs sm:text-sm">
+                <button 
+                    onClick={handleTopographieClick}
+                    className="bg-[#367C55] text-white px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase text-xs sm:text-sm"
+                >
                     Vérifier
                 </button>
             </div>
         </div>
 
         {/* Service 2 - Cadastre */}
-        <div className="group relative flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 border hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer">
-            <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">02</span>
+        <div className="group relative shadow-lg flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer">
+            <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-[#5da57d] group-hover:text-[#367C55] transition-colors duration-300">02</span>
             <span className="text-xs sm:text-sm text-xl sm:text-2xl md:text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Cadastre</span>
             
             {/* Informations au survol */}
@@ -52,15 +76,18 @@ export function Services() {
                 <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 md:mb-6 leading-relaxed">
                     Sécurisation foncière et délivrance de titres de propriété.
                 </p>
-                <button className="bg-[#367C55] text-white px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase text-xs sm:text-sm">
+                <button 
+                    onClick={handleCadastreClick}
+                    className="bg-[#367C55] text-white px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase text-xs sm:text-sm"
+                >
                     En savoir plus
                 </button>
             </div>
         </div>
 
         {/* Service 3 - Chatbot */}
-        <div className="group relative flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 border hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer sm:col-span-2 lg:col-span-1">
-            <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">03</span>
+        <div className="group relative shadow-lg flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer sm:col-span-2 lg:col-span-1">
+            <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-[#5da57d] group-hover:text-[#367C55] transition-colors duration-300">03</span>
             <span className="text-xs sm:text-sm text-xl sm:text-2xl md:text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Assistant IA</span>
             
             {/* Informations au survol */}
@@ -72,7 +99,10 @@ export function Services() {
                 <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 md:mb-6 leading-relaxed">
                     Assistant virtuel intelligent pour répondre à vos questions 24h/24.
                 </p>
-                <button className="bg-[#367C55] text-white px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase text-xs sm:text-sm">
+                <button 
+                    onClick={openChatbot}
+                    className="bg-[#367C55] text-white px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-2 hover:bg-[#2d5f44] transition-colors duration-200 cursor-pointer uppercase text-xs sm:text-sm"
+                >
                     Des questions ?
                 </button>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
 import Chatbot from './Chatbot';
 
@@ -12,6 +12,19 @@ export default function ChatbotButton() {
   const closeChatbot = () => {
     setIsChatbotOpen(false);
   };
+
+  // Écouter l'événement personnalisé pour ouvrir le chatbot
+  useEffect(() => {
+    const handleOpenChatbot = () => {
+      openChatbot();
+    };
+
+    window.addEventListener('openChatbot', handleOpenChatbot);
+    
+    return () => {
+      window.removeEventListener('openChatbot', handleOpenChatbot);
+    };
+  }, []);
 
   return (
     <>

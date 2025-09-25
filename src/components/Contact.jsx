@@ -155,7 +155,7 @@ export default function Contact() {
   };
 
   return (
-    <div className=" lg:px-8 xl:px-16 py-16 min-h-screen flex flex-col items-center justify-center gap-12">
+    <div className=" lg:px-8  xl:px-16 py-16 min-h-screen flex flex-col items-center justify-center gap-12">
       {/* Header Section */}
       <div className="flex flex-col items-center justify-center gap-4">
         <span className="text-4xl font-bold">Contact</span>
