@@ -4,7 +4,7 @@ import { BriefcaseIcon } from "@heroicons/react/24/outline";
 
 export function Services() {
   return (
-    <div className="px-4 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-12 md:py-16 min-h-screen flex flex-col bg-[#EDEDED] items-center justify-center gap-8 sm:gap-10 md:gap-12">
+    <div id="services-section" className="px-4 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-12 md:py-16 min-h-screen flex flex-col bg-[#EDEDED] items-center justify-center gap-8 sm:gap-10 md:gap-12">
       <div className="flex flex-col items-center justify-center gap-3 sm:gap-4">
         <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">Services</span>
         <span className="flex flex-row items-center justify-center gap-2">
