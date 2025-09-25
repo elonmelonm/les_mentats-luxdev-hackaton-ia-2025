@@ -2,8 +2,8 @@ import os
 import csv
 import json
 
-from data_loader import load_couches
-from pipeline import img_processing
+from scripts.data_loader import load_couches
+from scripts.pipeline import img_processing
 
 def main():
     # Load couches
