@@ -3,8 +3,8 @@ import os
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Body
 
-from data_loader import load_couches
-from pipeline import img_processing, coords_processing
+from scripts.data_loader import load_couches
+from scripts.pipeline import img_processing, coords_processing
 from schemas import AnalyseCompleteResponse
 
 app = FastAPI(title="Hackathon IA API", description="API pour l'analyse d'empietement de parcelles via OCR")
