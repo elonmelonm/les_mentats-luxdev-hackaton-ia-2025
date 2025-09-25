@@ -1,13 +1,14 @@
 import json
 
 from services.analyse_empietement import analyse_empietement
+from services.analyse_empietement_optimized import analyse_empietement_optimized
 from services.conversion_json_with_geojson import convertir_resultats_en_geojson, verifier_resultats_geojson
 from services.ocr import gemini_ocr
 from schemas import AnalyseCompleteResponse
 from utils.logs import logger
 
 
-def img_processing(img_path, couches):
+def img_processing(img_path, couches, preloaded_unions):
     """
     Pipeline complet : extraction des coordonnées via OCR, analyse d'empietement, et retour du modèle Pydantic.
 
@@ -28,7 +29,7 @@ def img_processing(img_path, couches):
     logger.info(f"Coordonnées extraites : {len(coords)} points")
     
     # Étape 2: Analyse d'empietement
-    json_result = analyse_empietement(coords, couches)
+    json_result = analyse_empietement_optimized(coords, couches, preloaded_unions)
     
     # Étape 3: Parsing du JSON en dict
     result_dict = json.loads(json_result)
@@ -46,7 +47,7 @@ def img_processing(img_path, couches):
     logger.info("Traitement terminé avec succès")
     return response
 
-def coords_processing(coords, couches):
+def coords_processing(coords, couches, preloaded_unions):
     """
     Pipeline complet : analyse d'empietement à partir de coordonnées, et retour du modèle Pydantic.
 
@@ -63,7 +64,7 @@ def coords_processing(coords, couches):
         return None
     
     # Étape 1: Analyse d'empietement
-    json_result = analyse_empietement(coords, couches)
+    json_result = analyse_empietement_optimized(coords, couches, preloaded_unions)
     
     # Étape 2: Parsing du JSON en dict
     result_dict = json.loads(json_result)
