@@ -1,131 +1,83 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { EnvelopeIcon, PhoneIcon, MapPinIcon } from '@heroicons/react/24/solid';
+import Logo from '../assets/logo-andf-nobackground.png';
 
 const Footer = () => {
-  const location = useLocation();
-
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
-
   return (
-    <footer className="bg-[#273344] lg:px-8 xl:px-32 text-white">
-      <div className="container flex flex-col mx-auto px-4 py-12 gap-9">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-[#273344] text-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
           {/* Logo et description */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-lg font-semibold mb-4 uppercase">L'ANDF</h3>
-            {/* <div className="flex items-center space-x-2 mb-4">
-              <img 
-                src="/src/assets/logo-andf.png" 
-                alt="ANDF Logo" 
-                className="h-10 w-auto"
-              />
-              <span className="text-xl font-bold">ANDF</span>
-            </div> */}
-            <p className="text-gray-300 mb-4 max-w-md">
-              L'Agence Nationale de Développement et de Financement accompagne les citoyens 
-              dans la sécurisation de leurs droits fonciers et la protection de leur patrimoine.
-            </p>
-            <div className="flex space-x-4">
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-                aria-label="Facebook"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-                aria-label="Twitter"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                </svg>
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-                aria-label="LinkedIn"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
+          <div className="lg:col-span-2">
+            <div className="flex items-center mb-4">
+              <img src={Logo} alt="ANDF Logo" className="h-14 w-auto mr-3" />
+              <div>
+                <h2 className="text-xl font-bold">ANDF</h2>
+                <p className="text-sm text-gray-200">Agence Nationale du Domaine et du Foncier</p>
+              </div>
             </div>
+            <p className="text-gray-200 text-sm max-w-md">
+              L'ANDF accompagne les citoyens dans la sécurisation de leurs droits fonciers et la protection de leur patrimoine.
+            </p>
           </div>
 
-          {/* Liens rapides */}
+          {/* Liens utiles */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 uppercase">Liens utiles</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link 
-                  to="/" 
-                  className={`"text-gray-300 hover:text-white transition-colors duration-200 ${
-                    isActive('/') ? 'text-yellow-600 font-semibold' : ''
-                }`}
-                >
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/cadastre" 
-                  className={`"text-gray-300 hover:text-white transition-colors duration-200 ${
-                  isActive('/cadastre') ? 'text-yellow-600 font-semibold' : ''
-              }`}
-                >
-                  Cadastre
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/topographie" 
-                  className={`"text-gray-300 hover:text-white transition-colors duration-200 ${
-                    isActive('/topographie') ? 'text-yellow-600 font-semibold' : ''
-                }`}
-                >
-                  Topographie
-                </Link>
-              </li>
+            <h3 className="text-lg font-semibold mb-4">Liens Utiles</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/" className="text-gray-200 hover:text-white hover:underline">Accueil</Link></li>
+              <li><Link to="/cadastre" className="text-gray-200 hover:text-white hover:underline">Cadastre</Link></li>
+              <li><Link to="/topographie" className="text-gray-200 hover:text-white hover:underline">Topographie</Link></li>
+              <li><a href="#" className="text-gray-200 hover:text-white hover:underline">Mentions Légales</a></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 uppercase">Contact</h3>
-            <div className="space-y-2 text-gray-300">
-              <p>
-                <span className="font-medium">Adresse:</span><br />
-                Cotonou, Immeuble Golden House, Face Église Sainte Rita
-              </p>
-              <p>
-                <span className="font-medium">Téléphone:</span><br />
-                +229 01 97 43 42 93
-              </p>
-              <p>
-                <span className="font-medium">Email:</span><br />
-                andf@finances.bj
-              </p>
-            </div>
+            <h3 className="text-lg font-semibold mb-4">Contactez-nous</h3>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start">
+                <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-200">Cotonou, Haie Vive, Rue de l'hôtel du Port</span>
+              </li>
+              <li className="flex items-center">
+                <EnvelopeIcon className="h-5 w-5 mr-3" />
+                <a href="mailto:contact@andf.bj" className="text-gray-200 hover:text-white hover:underline">contact@andf.bj</a>
+              </li>
+              <li className="flex items-center">
+                <PhoneIcon className="h-5 w-5 mr-3" />
+                <a href="tel:+22921313131" className="text-gray-200 hover:text-white hover:underline">+229 21 31 31 31</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div className="my-8 flex justify-center">
+          <div className="w-full md:w-3/4 lg:w-1/2 h-1.5 flex">
+            <div className="w-1/3 h-full bg-[#008751]"></div> {/* Green */}
+            <div className="w-1/3 h-full bg-[#FCDD09]"></div> {/* Yellow */}
+            <div className="w-1/3 h-full bg-[#E8112D]"></div> {/* Red */}
           </div>
         </div>
 
-        {/* <div className="flex flex-row"> */}
-          <div className="grid grid-cols-3 w-full">
-            <div className="h-2 bg-[#00965E] "></div>
-            <div className="h-2 bg-[#FFCC00]"></div>
-            <div className="h-2 bg-[#ED1C24]"></div>
+        <div className="mt-12 border-t border-white/20 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm">
+          <div className="flex items-center text-gray-300 mb-4 sm:mb-0">
+            <svg width="20" height="15" viewBox="0 0 3 2" className="mr-2 flex-shrink-0">
+              <rect width="1" height="2" fill="#008751"/>
+              <rect x="1" width="2" height="1" fill="#FCDD09"/>
+              <rect x="1" y="1" width="2" height="1" fill="#E8112D"/>
+            </svg>
+            <span>&copy; {new Date().getFullYear()} ANDF. Tous droits réservés.</span>
           </div>
-        {/* </div> */}
-
-        {/* Copyright */}
-        <div className="border-t border-gray-500 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; Agence Nationale du Domaine et du Foncier -  2025 ANDF. Tous droits réservés.</p>
+          <div className="flex space-x-4">
+            {/* Vous pouvez ajouter ici vos icônes de réseaux sociaux, par exemple avec FontAwesome */}
+            {/* <a href="#" aria-label="Facebook" className="text-gray-300 hover:text-white"><i className="fab fa-facebook-f"></i></a> */}
+            {/* <a href="#" aria-label="Twitter" className="text-gray-300 hover:text-white"><i className="fab fa-twitter"></i></a> */}
+            {/* <a href="#" aria-label="LinkedIn" className="text-gray-300 hover:text-white"><i className="fab fa-linkedin-in"></i></a> */}
+          </div>
         </div>
       </div>
     </footer>

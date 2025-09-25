@@ -6,6 +6,7 @@ import Chatbots from './pages/Chatbots';
 import Dashboard from './pages/Dashboard';
 import Cadastre from './pages/Cadastre';
 import Topographie from './pages/Topographie';
+import CarteTopographie from './pages/CarteTopographie';
 // import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
               <Route path="/chatbots" element={<Chatbots />} />
               <Route path="/cadastre" element={<Cadastre />} />
               <Route path="/topographie" element={<Topographie />} />
+              <Route path="/carte-topographie" element={<CarteTopographie />} />
             </Routes>
           </MainLayout>
         } />
