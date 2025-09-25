@@ -15,59 +15,60 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 px-2 md:px-8 lg:px-32 h-24 bg-white shadow-md">
-      <nav className="container mx-auto py- flex flex-row text-[#367C55] items-center justify-center h-full w-full">
-        <div className="flex items-center w-full justify-between">
+    <header className="sticky top-0 z-50 bg-white text-[#367C55] shadow-md">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+        <div className="flex items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center">
             <img 
               src={Logo}
               alt="ANDF Logo" 
-              className="h-18 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
+        </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/" 
-              className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
-                isActive('/') ? 'text-yellow-600 font-semibold' : ''
-              }`}
-            >
-              Accueil
-            </Link>
-            <Link 
-              to="/cadastre" 
-              className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
-                isActive('/cadastre') ? 'text-yellow-600 font-semibold' : ''
-              }`}
-            >
-              Cadastre
-            </Link>
-            <Link 
-              to="/topographie" 
-              className={`text-[#367C55] cursor-pointer font-semibold hover:text-black transition-colors duration-200 ${
-                isActive('/topographie') ? 'text-yellow-600 font-semibold' : ''
-              }`}
-            >
-              Topographie
-            </Link>
-            {/* <Link 
-              to="/dashboard" 
-              className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
-              }`}
-            >
-              Dashboard
-            </Link> */}
-          </div>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-2 h-full">
+          <Link 
+            to="/" 
+            className={`px-4 h-full flex items-center font-semibold tracking-wide transition-all duration-300 ${
+              isActive('/') 
+                ? 'bg-[#367C55] text-white' 
+                : 'text-[#367C55] hover:bg-gray-300 hover:text-gray-700'
+            }`}
+          >
+            Accueil
+          </Link>
+          <Link 
+            to="/cadastre" 
+            className={`px-4 h-full flex items-center font-semibold tracking-wide transition-all duration-300 ${
+              isActive('/cadastre') 
+                ? 'bg-[#367C55] text-white' 
+                : 'text-[#367C55] hover:bg-gray-300 hover:text-gray-700'
+            }`}
+          >
+            Cadastre
+          </Link>
+          <Link 
+            to="/topographie" 
+            className={`px-4 h-full flex items-center font-semibold tracking-wide transition-all duration-300 ${
+              isActive('/topographie') 
+                ? 'bg-[#367C55] text-white' 
+                : 'text-[#367C55] hover:bg-gray-300 hover:text-gray-700'
+            }`}
+          >
+            Topographie
+          </Link>
+        </div>
 
-          {/* Mobile menu button */}
+        {/* Mobile menu button */}
+        <div className="md:hidden">
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+            className="p-2 rounded-md text-[#367C55] hover:text-green-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
           >
+            <span className="sr-only">Open main menu</span>
             <svg
               className="h-6 w-6"
               fill="none"
@@ -92,42 +93,67 @@ const Header = () => {
             </svg>
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
-            <div className="flex flex-col space-y-4 pt-4">
-              <Link 
-                to="/" 
-                onClick={() => setIsMenuOpen(false)}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/') ? 'text-blue-600 font-semibold' : ''
-                }`}
-              >
-                Accueil
-              </Link>
-              <Link 
-                to="/chatbots" 
-                onClick={() => setIsMenuOpen(false)}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/chatbots') ? 'text-blue-600 font-semibold' : ''
-                }`}
-              >
-                Assistant IA
-              </Link>
-              {/* <Link 
-                to="/dashboard" 
-                onClick={() => setIsMenuOpen(false)}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${
-                  isActive('/dashboard') ? 'text-blue-600 font-semibold' : ''
-                }`}
-              >
-                Dashboard
-              </Link> */}
-            </div>
-          </div>
-        )}
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 z-40 md:hidden"
+          onClick={toggleMenu}
+        ></div>
+      )}
+
+      {/* Mobile Navigation Sidebar */}
+      <div
+        className={`fixed top-0 right-0 h-full w-64 bg-white/5 backdrop-blur-sm shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="py-5">
+          <div className="flex justify-end mb-4 px-5">
+            <button onClick={toggleMenu} className="p-2 rounded-md text-[#367C55] hover:bg-gray-100">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div className="flex flex-col">
+            <Link 
+              to="/" 
+              className={`block px-5 py-3 text-base font-medium ${
+                isActive('/') 
+                  ? 'bg-green-50 text-green-700' 
+                  : 'text-[#367C55] hover:bg-gray-50 hover:text-green-700'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Accueil
+            </Link>
+            <Link 
+              to="/cadastre" 
+              className={`block px-5 py-3 text-base font-medium ${
+                isActive('/cadastre') 
+                  ? 'bg-green-50 text-green-700' 
+                  : 'text-[#367C55] hover:bg-gray-50 hover:text-green-700'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Cadastre
+            </Link>
+            <Link 
+              to="/topographie" 
+              className={`block px-5 py-3 text-base font-medium ${
+                isActive('/topographie') 
+                  ? 'bg-green-50 text-green-700' 
+                  : 'text-[#367C55] hover:bg-gray-50 hover:text-green-700'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Topographie
+            </Link>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };

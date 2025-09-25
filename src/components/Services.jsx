@@ -61,7 +61,7 @@ export function Services() {
         {/* Service 3 - Chatbot */}
         <div className="group relative flex flex-col items-end justify-end w-full h-48 sm:h-72 md:h-80 lg:h-72 gap-2 sm:gap-4 border hover:border-[#367C55] hover:border-2 sm:hover:border-4 lg:hover:border-[8px] p-3 sm:p-4 transition-all duration-300 cursor-pointer sm:col-span-2 lg:col-span-1">
             <span className="text-8xl sm:text-[120px] md:text-[140px] lg:text-[150px] text-slate-400 group-hover:text-[#367C55] transition-colors duration-300">03</span>
-            <span className="text-xs sm:text-sm text-xl sm:text-2xl md:text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Chatbot</span>
+            <span className="text-xs sm:text-sm text-xl sm:text-2xl md:text-[30px] font-bold text-gray-500 group-hover:text-[#367C55] transition-colors duration-300">Assistant IA</span>
             
             {/* Informations au survol */}
             <div className="absolute inset-0 bg-white bg-opacity-95 p-3 sm:p-4 md:p-6 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-end text-end">
