@@ -14,7 +14,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/carte-topographie" element={<CarteTopographie />} />
         <Route path="/*" element={
           <MainLayout>
             <Routes>
@@ -22,6 +21,7 @@ function App() {
               <Route path="/chatbots" element={<Chatbots />} />
               <Route path="/cadastre" element={<Cadastre />} />
               <Route path="/topographie" element={<Topographie />} />
+              <Route path="/carte-topographie" element={<CarteTopographie />} />
             </Routes>
           </MainLayout>
         } />
