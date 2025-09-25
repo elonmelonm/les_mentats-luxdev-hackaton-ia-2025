@@ -55,7 +55,7 @@ export default function Topographie() {
   // Validation des fichiers
   const validateFile = (file) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-    const maxSize = 100 * 1024 * 1024; // 100MB
+    const maxSize = 20 * 1024 * 1024; // 20MB
 
     if (!allowedTypes.includes(file.type)) {
       setError('Type de fichier non autorisé. Formats acceptés : PDF, JPEG, JPG, PNG');
@@ -63,7 +63,7 @@ export default function Topographie() {
     }
 
     if (file.size > maxSize) {
-      setError('Le fichier est trop volumineux. Taille maximale : 100MB');
+      setError('Le fichier est trop volumineux. Taille maximale : 20MB');
       return false;
     }
 
@@ -568,7 +568,7 @@ export default function Topographie() {
                         
                         <div className="text-xs text-gray-400">
                           <p>Formats acceptés : PDF, JPEG, JPG, PNG</p>
-                          <p>Taille maximale : 100MB</p>
+                          <p>Taille maximale : 20MB</p>
                         </div>
                         
                         {/* Bouton caméra pour mobile/tablette */}
