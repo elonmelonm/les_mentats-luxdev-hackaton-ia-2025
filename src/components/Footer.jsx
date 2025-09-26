@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Logo et description */}
           <div className="lg:col-span-2">
             <div className="flex items-center mb-4">
-              <img src={Logo} alt="ANDF Logo" className="h-14 w-auto mr-3" />
+              {/* <img src={Logo} alt="ANDF Logo" className="h-14 w-auto mr-3" /> */}
               <div>
                 <h2 className="text-xl font-bold">ANDF</h2>
                 <p className="text-sm text-gray-200">Agence Nationale du Domaine et du Foncier</p>

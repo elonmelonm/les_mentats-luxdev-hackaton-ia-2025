@@ -58,7 +58,7 @@ const Header = () => {
                 : 'text-[#367C55] hover:bg-gray-300 hover:text-gray-700'
             }`}
           >
-            Topographie
+            Vérification
           </Link>
         </div>
 
@@ -149,7 +149,7 @@ const Header = () => {
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Topographie
+              Vérification
             </Link>
           </div>
         </div>

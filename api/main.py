@@ -2,12 +2,27 @@ import tempfile
 import os
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Body
+from fastapi.middleware.cors import CORSMiddleware
 
 from scripts.data_loader import load_couches, preload_couches
 from scripts.pipeline import img_processing, coords_processing
 from schemas import AnalyseCompleteResponse
 
 app = FastAPI(title="Hackathon IA API", description="API pour l'analyse d'empietement de parcelles via OCR")
+
+# Configuration CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174", 
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 couches = load_couches()
 preloaded_unions = preload_couches(couches)
