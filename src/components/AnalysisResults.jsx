@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CheckCircleIcon, XCircleIcon, MapIcon } from '@heroicons/react/24/outline';
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 const AnalysisResults = ({ results }) => {
   if (!results) return null;
@@ -21,6 +23,114 @@ const AnalysisResults = ({ results }) => {
   ];
 
   const hasEmpietement = results.empietement;
+  const mapContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+
+    // Initialize MapLibre map inspired by public/index.html
+    const map = new maplibregl.Map({
+      container: mapContainerRef.current,
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: 'raster',
+            tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tileSize: 256,
+          },
+        },
+        layers: [
+          {
+            id: 'osm',
+            type: 'raster',
+            source: 'osm',
+            minzoom: 0,
+            maxzoom: 19,
+          },
+        ],
+      },
+      center: [2.3158, 9.3077],
+      zoom: 7,
+    });
+
+    // Controls
+    map.addControl(new maplibregl.NavigationControl(), 'top-left');
+    map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }));
+
+    // Optional: if results contain a GeoJSON to display (e.g., parcelle_libre_finale)
+    map.on('load', () => {
+      const maybeGeoJSON = results?.parcelle_libre_finale;
+      if (maybeGeoJSON && typeof maybeGeoJSON === 'object' && (maybeGeoJSON.type === 'Feature' || maybeGeoJSON.type === 'FeatureCollection' || maybeGeoJSON.type === 'Polygon' || maybeGeoJSON.type === 'MultiPolygon')) {
+        const featureCollection = maybeGeoJSON.type === 'FeatureCollection'
+          ? maybeGeoJSON
+          : { type: 'FeatureCollection', features: [maybeGeoJSON.type === 'Feature' ? maybeGeoJSON : { type: 'Feature', geometry: maybeGeoJSON, properties: {} }] };
+
+        if (!map.getSource('analysis-geojson')) {
+          map.addSource('analysis-geojson', {
+            type: 'geojson',
+            data: featureCollection,
+          });
+        }
+
+        if (!map.getLayer('analysis-fill')) {
+          map.addLayer({
+            id: 'analysis-fill',
+            type: 'fill',
+            source: 'analysis-geojson',
+            paint: {
+              'fill-color': '#3b82f6',
+              'fill-opacity': 0.25,
+            },
+          });
+        }
+
+        if (!map.getLayer('analysis-outline')) {
+          map.addLayer({
+            id: 'analysis-outline',
+            type: 'line',
+            source: 'analysis-geojson',
+            paint: {
+              'line-color': '#1d4ed8',
+              'line-width': 2,
+            },
+          });
+        }
+
+        // Fit to bounds
+        try {
+          const coordinates = [];
+          featureCollection.features.forEach((f) => {
+            const geom = f.geometry;
+            if (!geom) return;
+            const collect = (coords) => {
+              if (typeof coords[0] === 'number') {
+                coordinates.push(coords);
+              } else {
+                coords.forEach(collect);
+              }
+            };
+            collect(geom.coordinates);
+          });
+          if (coordinates.length > 0) {
+            const lons = coordinates.map((c) => c[0]);
+            const lats = coordinates.map((c) => c[1]);
+            const minLon = Math.min(...lons);
+            const minLat = Math.min(...lats);
+            const maxLon = Math.max(...lons);
+            const maxLat = Math.max(...lats);
+            map.fitBounds([[minLon, minLat], [maxLon, maxLat]], { padding: 32, duration: 0 });
+          }
+        } catch (e) {
+          // noop
+        }
+      }
+    });
+
+    return () => {
+      map.remove();
+    };
+  }, [results]);
 
   return (
     <div className="space-y-6">
@@ -54,7 +164,14 @@ const AnalysisResults = ({ results }) => {
         </div>
       </div>
 
-    <div>ICI ON DOIT FAIRE AFFICHER LA CARTE </div>
+      {/* Carte d'analyse */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center space-x-2">
+          <MapIcon className="h-5 w-5" />
+          <span>Carte</span>
+        </h3>
+        <div ref={mapContainerRef} className="w-full h-96 rounded-md" />
+      </div>
 
 
       {/* Détails par couche */}
