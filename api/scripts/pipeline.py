@@ -1,6 +1,5 @@
 import json
 
-from services.analyse_empietement import analyse_empietement
 from services.analyse_empietement_optimized import analyse_empietement_optimized
 from services.conversion_json_with_geojson import convertir_resultats_en_geojson, verifier_resultats_geojson
 from services.ocr import gemini_ocr

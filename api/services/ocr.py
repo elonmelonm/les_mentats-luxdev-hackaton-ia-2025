@@ -21,13 +21,21 @@ Use the following format:
 ]
 """
 
+google_api_keys = [
+    os.getenv("GOOGLE_API_KEY_1"),
+    os.getenv("GOOGLE_API_KEY_2"),
+    """
+    os.getenv("GOOGLE_API_KEY_3"),
+    os.getenv("GOOGLE_API_KEY_4"),
+    os.getenv("GOOGLE_API_KEY_5"),
+    """
+]
+
 
 def gemini_ocr(img_path: str):
     logger.info(f"Starting OCR for image: {img_path}")
     try:
-        num = random.randint(1, 5)
-        google_api_key = os.getenv(f"GOOGLE_API_KEY_{num}")
-        logger.debug(f"Using API key number: {num}")
+        google_api_key = random.choice(google_api_keys)
         google_client = Client(api_key=google_api_key)
         configuration = {
             "response_mime_type": "application/json",
