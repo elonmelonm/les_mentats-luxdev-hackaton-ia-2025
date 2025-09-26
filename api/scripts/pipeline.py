@@ -1,11 +1,14 @@
+import json
+
 from services.analyse_empietement import analyse_empietement
+from services.analyse_empietement_optimized import analyse_empietement_optimized
+from services.conversion_json_with_geojson import convertir_resultats_en_geojson, verifier_resultats_geojson
 from services.ocr import gemini_ocr
 from schemas import AnalyseCompleteResponse
-
 from utils.logs import logger
 
 
-def img_processing(img_path, couches):
+def img_processing(img_path, couches, preloaded_unions):
     """
     Pipeline complet : extraction des coordonnées via OCR, analyse d'empietement, et retour du modèle Pydantic.
 
@@ -26,11 +29,17 @@ def img_processing(img_path, couches):
     logger.info(f"Coordonnées extraites : {len(coords)} points")
     
     # Étape 2: Analyse d'empietement
-    json_result = analyse_empietement(coords, couches)
+    json_result = analyse_empietement_optimized(coords, couches, preloaded_unions)
     
     # Étape 3: Parsing du JSON en dict
-    import json
     result_dict = json.loads(json_result)
+
+    # Etape 3.5: Conversion des géométries en GeoJSON EPSG:4326
+    result_dict = convertir_resultats_en_geojson(result_dict)
+
+    # Vérification des géométries GeoJSON - Si oui, continuer, sinon log warning et continuer
+    if not verifier_resultats_geojson(result_dict):
+        logger.warning("Certaines géométries dans les résultats ne sont pas des GeoJSON valides.")
     
     # Étape 4: Création du modèle Pydantic
     response = AnalyseCompleteResponse(**result_dict)
@@ -38,7 +47,7 @@ def img_processing(img_path, couches):
     logger.info("Traitement terminé avec succès")
     return response
 
-def coords_processing(coords, couches):
+def coords_processing(coords, couches, preloaded_unions):
     """
     Pipeline complet : analyse d'empietement à partir de coordonnées, et retour du modèle Pydantic.
 
@@ -55,16 +64,21 @@ def coords_processing(coords, couches):
         return None
     
     # Étape 1: Analyse d'empietement
-    json_result = analyse_empietement(coords, couches)
+    json_result = analyse_empietement_optimized(coords, couches, preloaded_unions)
     
     # Étape 2: Parsing du JSON en dict
-    import json
     result_dict = json.loads(json_result)
+
+    # Etape 3: Conversion des géométries en GeoJSON EPSG:4326
+    result_dict = convertir_resultats_en_geojson(result_dict)
+
+    # Vérification des géométries GeoJSON - Si oui, continuer, sinon log warning et continuer
+    if not verifier_resultats_geojson(result_dict):
+        logger.warning("Certaines géométries dans les résultats ne sont pas des GeoJSON valides.")
+    
     
     # Étape 3: Création du modèle Pydantic
     response = AnalyseCompleteResponse(**result_dict)
     
     logger.info("Traitement terminé avec succès")
     return response
-
-

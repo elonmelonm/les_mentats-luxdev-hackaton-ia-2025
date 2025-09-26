@@ -11,4 +11,8 @@ wheels/
 
 # Data folder
 Data Hackathon_IA_2025/
+
 .env
+
+notebooks/.ipynb_checkpoints
+notebooks/*.ipynb
