@@ -5,8 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "agno>=2.0.10",
+    "beautifulsoup4>=4.13.5",
     "ddgs>=9.6.0",
     "dotenv>=0.9.9",
+    "exa>=0.5.26",
+    "exa-py>=1.15.6",
     "fastapi>=0.117.1",
     "folium>=0.20.0",
     "geopandas>=1.1.1",
@@ -15,8 +19,13 @@ dependencies = [
     "langchain>=0.3.27",
     "langchain-community>=0.3.29",
     "langchain-google-genai>=2.1.12",
+    "langchain-qdrant>=0.2.1",
+    "langchain-text-splitters>=0.3.11",
+    "langgraph>=0.6.7",
     "matplotlib>=3.10.6",
     "python-multipart>=0.0.20",
+    "qdrant-client>=1.15.1",
+    "quarto>=0.1.0",
     "requests>=2.32.5",
     "uvicorn>=0.32.1",
 ]

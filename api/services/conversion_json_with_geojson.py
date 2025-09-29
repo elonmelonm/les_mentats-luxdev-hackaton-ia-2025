@@ -30,19 +30,19 @@ def reproj_geom(g):
     if g.geom_type == "Polygon":
         return {
             "type": "Polygon",
-            "coordonnees_parcelle": [reproj_coords(g.exterior.coords)]
+            "coordinates": [reproj_coords(g.exterior.coords)]
         }
     elif g.geom_type == "MultiPolygon":
         return {
             "type": "MultiPolygon",
-            "coordonnees_parcelle": [
+            "coordinates": [
                 [reproj_coords(p.exterior.coords)] for p in g.geoms
             ]
         }
     elif g.geom_type == "Point":
         x, y = g.x, g.y
         x2, y2 = transformer.transform(x, y)
-        return {"type": "Point", "coordonnees_parcelle": [x2, y2]}
+        return {"type": "Point", "coordinates": [x2, y2]}
     else:
         return mapping(g)
 
@@ -107,7 +107,7 @@ def convertir_resultats_en_geojson(results):
                     reprojected = [transformer.transform(x, y) for x, y in coords]
                     output[couche] = {
                         "type": "Polygon",
-                        "coordonnees_parcelle": [reprojected]
+                        "coordinates": [reprojected]
                     }
                 else:
                     output[couche] = data  # bools, flags...
@@ -130,8 +130,8 @@ def verifier_geojson(obj):
                            "Polygon", "MultiPolygon", "MultiLineString", "MultiPoint"]:
         logger.warning(f"GeoJSON invalide: type '{obj['type']}' non supporté.")
         return False
-    if "coordonnees_parcelle" not in obj and obj["type"] != "FeatureCollection":
-        logger.warning("GeoJSON invalide: clé 'coordonnees_parcelle' manquante.")
+    if "coordinates" not in obj and obj["type"] != "FeatureCollection":
+        logger.warning("GeoJSON invalide: clé 'coordinates' manquante.")
         return False
     return True
 
@@ -155,7 +155,7 @@ def verifier_resultats_geojson(results):
                     logger.info(f"{couche} OK")
     logger.info("Vérification des GeoJSON terminée.")
     return True
-
+"""
 if __name__ == "__main__":
     logger.info("Démarrage du script de test pour la conversion GeoJSON.")
     from scripts.data_loader import load_couches
@@ -178,4 +178,4 @@ if __name__ == "__main__":
     with open(output_filename, "w", encoding="utf-8") as f:
         json.dump(geojson_results, f, indent=2)
     logger.info(f"Résultats GeoJSON sauvegardés dans '{output_filename}'.")
-    
+"""

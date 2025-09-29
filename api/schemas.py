@@ -15,7 +15,7 @@ class ResponseSchema(BaseModel):
 
 class IntersectionResult(BaseModel):
     type: str
-    coordonnees_parcelle: List[List]
+    coordinates: List[List]
 
 class CoucheResult(BaseModel):
     has_intersection: bool
@@ -41,4 +41,8 @@ class AnalyseCompleteResponse(BaseModel):
     empietement: bool
     coordonnees_parcelle: Optional[IntersectionResult]
 
+class UserQuery(BaseModel):
+    question: str
 
+class AgentResponse(BaseModel):
+    answer: str
