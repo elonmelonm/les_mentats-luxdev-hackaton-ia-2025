@@ -3,13 +3,15 @@ import os
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Body
 
-from data_loader import load_couches
-from pipeline import img_processing, coords_processing
-from schemas import AnalyseCompleteResponse
+from scripts.data_loader import load_couches, preload_couches
+from scripts.pipeline import img_processing, coords_processing
+from services.chatbot import agent
+from schemas import AnalyseCompleteResponse, AgentResponse, UserQuery
 
 app = FastAPI(title="Hackathon IA API", description="API pour l'analyse d'empietement de parcelles via OCR")
 
 couches = load_couches()
+preloaded_unions = preload_couches(couches)
 
 @app.post("/api/analyse/img", response_model=AnalyseCompleteResponse)
 async def analyse_image(file: UploadFile = File(...)):
@@ -30,7 +32,7 @@ async def analyse_image(file: UploadFile = File(...)):
     
     try:
         # Traiter l'image via le pipeline
-        result = img_processing(temp_path, couches)
+        result = img_processing(temp_path, couches, preloaded_unions)
         if result is None:
             raise HTTPException(status_code=500, detail="Échec de l'extraction des coordonnées via OCR")
         
@@ -52,7 +54,7 @@ async def analyse_coords(coords: list = Body(...)):
         raise HTTPException(status_code=400, detail="Format des coordonnées invalide. Attendu: liste de dicts avec 'x' et 'y'.")
     
     try:
-        result = coords_processing(coords, couches)
+        result = coords_processing(coords, couches, preloaded_unions)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors du traitement des coordonnées: {str(e)}")
@@ -61,3 +63,26 @@ async def analyse_coords(coords: list = Body(...)):
 async def root():
     return {"message": "API Hackathon IA - Analyse d'empietement"}
 
+
+@app.post("/api/ask", response_model=AgentResponse)
+async def ask_agent(query: UserQuery):
+    """Route API qui interroge l'agent avec une question utilisateur."""
+    try:
+        stream = agent.stream(
+            {"messages": [{"role": "user", "content": query.question}]},
+            {"configurable": {"thread_id": "1"}},
+            stream_mode="values",
+        )
+
+        final_message = None
+        for s in stream:
+            if "messages" in s and s["messages"]:
+                final_message = s["messages"][-1]
+
+        if final_message and hasattr(final_message, "content"):
+            return {"answer": final_message.content}
+        else:
+            return {"answer": "Je n'ai pas pu générer de réponse."}
+
+    except Exception as e:
+        return {"answer": f"Erreur: {str(e)}"}

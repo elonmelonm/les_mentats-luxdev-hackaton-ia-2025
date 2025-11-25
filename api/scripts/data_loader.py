@@ -78,3 +78,29 @@ def load_couches():
     ]
 
     return couches
+
+
+def preload_couches(couches):
+    """
+    Précharge les unions des géométries pour chaque couche pour éviter les recalculs.
+
+    Args:
+        couches (list): Liste de tuples (GeoDataFrame, nom de la couche).
+
+    Returns:
+        dict: Dictionnaire avec les unions préchargées par nom de couche.
+    """
+    preloaded = {}
+    for geodf, name in couches:
+        try:
+            # Harmoniser le CRS si nécessaire
+            if geodf.crs not in ["EPSG:32631", "EPSG:32630", "EPSG:32632"]:
+                geodf = geodf.to_crs(epsg=32631)
+            # Calculer l'union une fois pour toutes
+            union_geom = geodf.geometry.union_all()
+            preloaded[name] = union_geom
+            logger.info(f"[{name}] Union préchargée avec succès.")
+        except Exception as e:
+            logger.error(f"Préchargement union pour {name} échoué : {e}")
+            preloaded[name] = None
+    return preloaded

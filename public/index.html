@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Carte interactive MapLibre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- MapLibre CSS -->
+    <link href="https://unpkg.com/maplibre-gl@^5.7.3/dist/maplibre-gl.css" rel="stylesheet" />    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+        /* Légende */
+        .legend {
+            background: white;
+            padding: 10px;
+            border: 2px solid grey;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            margin-right: 8px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="legend" id="legend"><b>Légende</b><br></div>
+
+<div id="layerControl" style="position:absolute;top:10px;right:10px;background:white;padding:10px;z-index:1;max-height:400px;overflow-y:auto;">
+  <b>Layers</b><br>
+</div>
+
+
+<!-- MapLibre JS -->
+    <script src="https://unpkg.com/maplibre-gl@^5.7.3/dist/maplibre-gl.js"></script>
+<script>
+
+
+const map = new maplibregl.Map({
+    container: 'map',
+    style: {
+        "version": 8,
+        "sources": {
+            "osm": {
+                "type": "raster",
+                "tiles": ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+                "tileSize": 256
+            }
+        },
+        "layers": [
+            {
+                "id": "osm",
+                "type": "raster",
+                "source": "osm",
+                "minzoom": 0,
+                "maxzoom": 19
+            }
+        ]
+    },
+    center: [2.3158, 9.3077],
+    zoom: 7
+});
+
+// Couleurs aléatoires
+function getRandomColor() {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+// Données GeoJSON (local)
+var layersData = {
+        "Couche Aif": "Data Hackathon_IA_2025/couche/crs_4326/aif_wgs84.geojson",
+        "Couche Aires protégées": "Data Hackathon_IA_2025/couche/crs_4326/aires_protegees_wgs84.geojson",
+        "Couche Dpl": "Data Hackathon_IA_2025/couche/crs_4326/dpl_wgs84.geojson",
+        "Couche Dpm": "Data Hackathon_IA_2025/couche/crs_4326/dpm_wgs84.geojson",
+        //"Couche Enregistrement": "Data Hackathon_IA_2025/couche/crs_4326/enregistrement_wgs84.geojson",
+        "Couche Litige": "Data Hackathon_IA_2025/couche/crs_4326/litige_wgs84.geojson",
+        "Couche Parcelle": "Data Hackathon_IA_2025/couche/crs_4326/parcelle_wgs84.geojson",
+        "Couche Restriction": "Data Hackathon_IA_2025/couche/crs_4326/restriction_wgs84.geojson",
+        "Couche Tf démembres": "Data Hackathon_IA_2025/couche/crs_4326/tf_demembres_wgs84.geojson",
+        "Couche Tf en cours": "Data Hackathon_IA_2025/couche/crs_4326/tf_en_cours_wgs84.geojson",
+        "Couche Tf état": "Data Hackathon_IA_2025/couche/crs_4326/tf_etat_wgs84.geojson",
+        "Couche Titre reconstitué": "Data Hackathon_IA_2025/couche/crs_4326/titre_reconstitue_wgs84.geojson",
+        "Couche Zone inondable": "Data Hackathon_IA_2025/couche/crs_4326/zone_inondable_wgs84.geojson",
+    };
+
+
+// Les couches initiales seront déterminées dynamiquement après chargement des données
+let initialLayers = [];
+
+const layers = {}; 
+
+var legendDiv = document.getElementById('legend');
+const layerControlDiv = document.getElementById('layerControl');
+
+
+// On attend d'avoir les données pour déterminer les couches initiales
+fetch('analyse_geojson_finale.json')
+    .then(res => res.json())
+    .then(data => {
+        // Récupère la liste des couches à afficher au départ
+        initialLayers = Array.isArray(data.couches_empietees) ? data.couches_empietees : [];
+
+        for (let name in layersData) {
+            const color = getRandomColor();
+            const sourceId = "src_" + name.replace(/\s/g, "_");
+            const layerId = "layer_" + name.replace(/\s/g, "_");
+            const label = document.createElement('label');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = initialLayers.includes(name);
+            checkbox.dataset.layer = layerId;
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(" " + name));
+            layerControlDiv.appendChild(label);
+            layerControlDiv.appendChild(document.createElement('br'));
+
+
+            if (initialLayers.includes(name)) {
+                fetch(layersData[name])
+                .then(res => {
+                    if (!res.ok) {
+                        console.warn(`Fichier GeoJSON non trouvé pour la couche : ${name} (${layersData[name]})`);
+                        return null;
+                    }
+                    return res.json();
+                })
+                .then(dataGeo => {
+                    if (!dataGeo) return;
+                    map.addSource(sourceId, {
+                        "type": "geojson",
+                        "data": dataGeo
+                    });
+                    map.addLayer({
+                        "id": layerId,
+                        "type": "fill",
+                        "source": sourceId,
+                        "layout": { "visibility": "visible" },
+                        "paint": {
+                            "fill-color": color,
+                            "fill-opacity": 0.4,
+                            "fill-outline-color": "black"
+                        }
+                    });
+                    map.addLayer({
+                        "id": layerId + "_outline",
+                        "type": "line",
+                        "source": sourceId,
+                        "layout": { "visibility": "visible" },
+                        "paint": {
+                            "line-color": color,
+                            "line-width": 2
+                        }
+                    });
+                    layers[name] = { visible: true, color, sourceId, layerId };
+                });
+            }
+
+            checkbox.addEventListener('change', (e) => {
+                const checked = e.target.checked;
+                if (checked && !map.getLayer(layerId)) {
+                    fetch(layersData[name])
+                        .then(res => {
+                            if (!res.ok) {
+                                console.warn(`Fichier GeoJSON non trouvé pour la couche : ${name} (${layersData[name]})`);
+                                return null;
+                            }
+                            return res.json();
+                        })
+                        .then(dataGeo => {
+                            if (!dataGeo) return;
+                            if (!map.getSource(sourceId)) {
+                                map.addSource(sourceId, { type: "geojson", data: dataGeo });
+                            }
+                            map.addLayer({
+                                id: layerId,
+                                type: "fill",
+                                source: sourceId,
+                                layout: { "visibility": "visible" },
+                                paint: { "fill-color": color, "fill-opacity": 0.4, "fill-outline-color": "black" }
+                            });
+                            map.addLayer({
+                                id: layerId + "_outline",
+                                type: "line",
+                                source: sourceId,
+                                layout: { "visibility": "visible" },
+                                paint: { "line-color": color, "line-width": 2 }
+                            });
+                        });
+                } else if (!checked && map.getLayer(layerId)) {
+                    map.setLayoutProperty(layerId, 'visibility', 'none');
+                    map.setLayoutProperty(layerId + '_outline', 'visibility', 'none');
+                }
+            });
+
+            // Popup au clic
+            map.on('click', layerId, function(e){
+                const features = e.features;
+                if (!features || features.length === 0) return;
+                const feature = features[0];
+                const clickLngLat = e.lngLat;
+                const description = `<b>${name}</b> <br> ID: ${feature.id || feature.properties.id || "N/A"}`;
+                new maplibregl.Popup()
+                    .setLngLat(clickLngLat)
+                    .setHTML(description)
+                    .addTo(map);
+                // Zoom sur la géométrie du feature (Point, Polygon, MultiPolygon)
+                let bounds;
+                const geom = feature.geometry;
+                if (geom.type === 'Point') {
+                    bounds = new maplibregl.LngLatBounds(geom.coordinates, geom.coordinates);
+                } else if (geom.type === 'Polygon') {
+                    bounds = geom.coordinates[0].reduce((b, coord) => b.extend(coord), new maplibregl.LngLatBounds(geom.coordinates[0][0], geom.coordinates[0][0]));
+                } else if (geom.type === 'MultiPolygon') {
+                    let allCoords = [].concat(...geom.coordinates.map(ring => ring[0]));
+                    bounds = allCoords.reduce((b, coord) => b.extend(coord), new maplibregl.LngLatBounds(allCoords[0], allCoords[0]));
+                }
+                if (bounds) {
+                    map.fitBounds(bounds, { padding: 20 });
+                }
+            });
+            map.on('mouseenter', layerId, () => map.getCanvas().style.cursor = 'pointer');
+            map.on('mouseleave', layerId, () => map.getCanvas().style.cursor = '');
+
+            // Ajouter à la légende
+            const item = document.createElement('div');
+            const i = document.createElement('i');
+            i.style.background = color;
+            item.appendChild(i);
+            item.insertAdjacentHTML('beforeend', name);
+            legendDiv.appendChild(item);
+        }
+
+        // Appel du module pour la parcelle
+        import('./polygone_parcelle.js').then(mod => {
+            if (mod.tracerParcelle) {
+                mod.tracerParcelle(map, data);
+            }
+        });
+    });
+</script>
+
+<script type="module">
+
+    import { tracerParcelle } from "./polygone_parcelle.js";
+
+    fetch('analyse_geojson_finale.json')
+        .then(res => res.json())
+        .then(data => {
+            tracerParcelle(map, data);
+        });
+</script>
+
+</body>
+</html>
